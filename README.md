@@ -14,18 +14,21 @@ Pipeline details:
 
                 Commands:
 
-                        1. filter.sh <sqa file from 1st round of VADR> <fasta file of seqs>
+                        1. filter.sh <sqa file from 1st round of VADR> <refseq_summary file> <fasta file of seqs>
 
                         - filters the vadr.sqa.tbl file for sequences that have PASSED
                         - creates fasta file with those sequences according to their refseq
+			- refseq_summary file: contains 2 columns (1st: refseqs, 2nd: length of refseqs)
+			- output files: .fa files: fasta file with all the sequences that have passed for each refseq
+				        .reverse.list.txt with a list of sequences that passed for each refseq
 
         b. ALIGN + BUILD (align filtered sequences and refseq and build new CM)
 
                 Commands:
 
                         align.sh (calls all the scripts below)
-
 			------------------------------------------------------------------------------------------
+			Sub-sccripts in the align-scripts directory
 
                         1. qalign.sh
                         - Takes the fasta files from the FILTER step and uses cmalign 
@@ -70,7 +73,6 @@ Pipeline details:
 
                         11. qsub.sh
 			- takes the .final.stk from ALIGN step 10 and builds a new CM
-
 
 3. With new profile run 2nd round of VADR on the same subset of viral sequences
 
