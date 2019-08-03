@@ -1,4 +1,4 @@
-
+#!/bin/sh
 #dir=$1
 
 for file in *.cm;
@@ -18,6 +18,8 @@ do
 	fi
 
 done
+
+#rm *stk.list
 
 for file in *.fa;
 do

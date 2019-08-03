@@ -14,5 +14,4 @@ do
 		rm ${file:0:9}.cmalign.sorted.txt
 		mv ${file:0:9}.cmalign.sorted2.txt ${file:0:9}.cmalign.sorted.txt
 	fi
-
 done

@@ -35,14 +35,39 @@ def main():
 	for i in range(len(keys)):
 		refseq_dict[keys[i]] = []
 
+	#NC_009825 = ["MH742362.1", "MH742364.1","KY283130.1", "AB795432.3"]
+	#NC_009826 = ["AF064490.1", "MH427311.1","MH427313.1", "MH427312.1"]
+
 	for i in range(3, len(lines)):
 		line = lines[i].strip()
 		line = line.split()
-		
+		name = line[1]
+		name = name.split("|")
+		name = name[len(name)-2]	
+		#print(line)	
+		"""if line[5] == "NC_009825" and name not in NC_009825 and int(line[2]) >= 9355 \
+		   	and (line[13] == "Low_Similarity_at_Start(lowsim5s),Low_Similarity_at_End(lowsim3s)" \
+			or line[13] == "Low_Similarity_at_Start(lowsim5s)" \
+			or line[13] == "Low_Similarity_at_End(lowsim3s)"):
+			print(name, line[2], line[5])
+			refseq_dict[line[5]].append([name, line[2]])
+
+		if line[5] == "NC_009826" and name not in NC_009826 and int(line[2]) >= 9343 \
+			and (line[13] == "Low_Similarity_at_Start(lowsim5s),Low_Similarity_at_End(lowsim3s)" \
+			or line[13] == "Low_Similarity_at_Start(lowsim5s)" \
+			or line[13] == "Low_Similarity_at_End(lowsim3s)"):
+			refseq_dict[line[5]].append([name, line[2]])
+			print(name, line[2], line[5])
+
+		if line[5] == "NC_009824" and int(line[2]) >= 9456 \
+			and (line[13] == "Low_Similarity_at_End(lowsim3s)"):
+			refseq_dict[line[5]].append([name, line[2]])
+			print(name, line[2], line[5])"""
+
 		if line[3] == "PASS":
-			name = line[1]
-			name = name.split("|")
-			name = name[len(name)-2]
+			#name = line[1]
+			#name = name.split("|")
+			#name = name[len(name)-2]
 			#if line[5] not in refseq_dict.keys():
 			#	if int(line[2]) >= refseq_lengths[line[5]]:
 			#		refseq_dict[line[5]] = [[name,line[2]]]

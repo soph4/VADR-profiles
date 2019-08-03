@@ -5,6 +5,7 @@
 
 #for now the script works if there are only 2 CDS found in refseq
 #which is not necessarily true for other refseqs (should fix later)
+import sys
 
 def main():
 

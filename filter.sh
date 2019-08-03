@@ -9,7 +9,9 @@ refseq_summary=$2
 #Step 1
 #Input: requires the .sqa.tbl file
 #Output: .txt files with all the sequences that passed in their individual refseq groups
-python3 /panfs/pan1/infernal/sophia/HCV-v2/scripts/seperate.py $1 $2
+python3 /panfs/pan1/infernal/sophia/HCV-v2/scripts/VADR-profiles/separate.py $1 $2
+
+
 
 #Step 2
 #Input: .txt file
@@ -20,7 +22,7 @@ do
 	sort -k2,2 -r -n ${file:0:9}.txt > ${file:0:9}.reverse.txt	
 	echo ${file:0:9}.1 > ${file:0:9}.reverse.list.txt
 	awk '{print $1}' ${file:0:9}.reverse.txt >> ${file:0:9}.reverse.list.txt		
-	rm ${file:0:9}.txt
+	#rm ${file:0:9}.txt
 	
 done
 

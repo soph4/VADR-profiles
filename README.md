@@ -2,6 +2,7 @@ General Pipeline:
 1. Run 1st round of VADR on subset of viral sequences (with original refseqs)
 2. Take sequences that passed 1st round of VADR and build profile to capture diversity in viruses that one refseq cannot capture
 3. With new profile run 2nd round of VADR on the same subset of viral sequences
+4. Repeat steps 3 and 4 until the number of sequences that PASS and FAIL stop changing
 
 Pipeline details:
 1. Run 1st round of VADR on subset of viral sequences (with original refseqs)
@@ -9,7 +10,8 @@ Pipeline details:
         Command: v-annotate.pl <fasta seq file> <output directory>
 
 2. Take sequences that passed 1st round of VADR and build profile to capture diversity in viruses that one refseq cannot capture
-
+	- All of these scripts should be run in the same directory
+	
         a. FILTER (for sequences that PASS 1st VADR run)
 
                 Commands:
@@ -27,10 +29,12 @@ Pipeline details:
                 Commands:
 
                         align.sh (calls all the scripts below)
+			- currently does not work (run the steps independently)		
+	
 			------------------------------------------------------------------------------------------
 			Sub-sccripts in the align-scripts directory
 
-                        1. qalign.sh
+                        1. qalign.sh (takes some time to run)
                         - Takes the fasta files from the FILTER step and uses cmalign 
 			  to align the sequences to their refseq
 
@@ -46,8 +50,11 @@ Pipeline details:
                         4. weight.sh
                         - takes the merged .stk files from ALIGN step 3 and uses esl-weight 
 			  to filter sequences so no sequence is more than 95% similiar to each other
+			- the perecent similarity can be changed in the script to allow more sequences
+			  in or to restrict the number of sequecnes
 
                         5. cds_start_end.py
+			- input: concatenated file of all the refseqs .minfo files
 			- extracts the start and stop position for each refseq from the .minfo files 
 			- creates cds_start_end.txt file
 
@@ -71,8 +78,16 @@ Pipeline details:
                         10. rm_seq_stk.sh
 			- removes the sequences from the .stk files that do not exceed the start or end CDS positions
 
-                        11. qsub.sh
-			- takes the .final.stk from ALIGN step 10 and builds a new CM
+			11. if any refseq gets 3 or less sequences in the .final.stk file duplicate refseq 
+			    in the .final.stk file until the number of sequences reaches a total of 4. 
+			    (allows the resulting ere score of the CM to be comparable to the other CMs built with a lot more sequences)
+
+                        12. qsub.sh (takes time to run)
+			- takes the .final.stk from ALIGN step 10 or 11 and builds a new CM for that refseq
+
+			13. cat *build.out > hcv.cm
+			- concatenates all the .build.out files to create one CM file
+			- this is the new CM that will be used when VADR is run again
 
 3. With new profile run 2nd round of VADR on the same subset of viral sequences
 
