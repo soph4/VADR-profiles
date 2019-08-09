@@ -8,9 +8,7 @@
 import sys
 
 def main():
-
 	#opens the concatenated ,minfo file for all refseqs
-	#file = input("Enter file name: ")
 	file = open(sys.argv[1])
 	lines = file.readlines()
 	file.close()
@@ -26,12 +24,10 @@ def main():
 	
 	for i in range(0,len(lines)):
 		line = lines[i].strip().split()
-		#print(i)			
 		#when a CDS line if found
 		if "MODEL" in line[0] and i == 0:
 			name = line[1]		
 		if "MODEL" in line[0] and i!= 0:
-			#name = line[1]
 			out.write(name + "\t" + str(start) + "\t" + str(end) + "\n")
 			start = 0
 			end = 0
@@ -56,9 +52,7 @@ def main():
 					end = int(x[0][1:])
 				if int(x[2]) < start:
 					start = int(x[2])
-				#num=0
 				name = line[1]
-				#out.write(name + "\t" + str(start) + "\t" + str(end) + "\n")
 			
 	name = line[1]
 	out.write(name + "\t" + str(start) + "\t" + str(end) + "\n")
